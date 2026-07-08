@@ -1,0 +1,1296 @@
+@font-face {
+  font-family: "Camel";
+  src: url("../fonts/TheYearofTheCamel-Regular.otf") format("opentype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Manchette";
+  src: url("../fonts/ManchetteFine-Regular.otf") format("opentype");
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Manchette";
+  src: url("../fonts/ManchetteFine-Bold.otf") format("opentype");
+  font-weight: 700;
+  font-display: swap;
+}
+
+:root {
+  --burgundy-dark: #150306;
+  --burgundy-deep: #21070c;
+  --cream: #fff8ee;
+  --beige: #eadccb;
+  --gold: #9b621d;
+  --ink: #150306;
+  --page-bg-color: var(--cream);
+  --page-bg-image: url("../images/menu-product-bg.png");
+  --sidebar-bg-image: url("../images/sidebar-burgundy-pattern.png");
+  --menu-font-ar: "Manchette", "Tahoma", Arial, sans-serif;
+  --menu-font-en: "Camel", "Times New Roman", serif;
+  --menu-font-mixed: "Camel", "Manchette", "Tahoma", Arial, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+}
+
+body.menu-screen-page {
+  min-height: 100vh;
+  width: 100vw;
+  height: 100vh;
+  direction: rtl;
+  overflow: hidden;
+  color: var(--ink);
+  font-family: var(--menu-font-ar);
+  background: var(--page-bg-color);
+  position: relative;
+}
+
+body.menu-screen-page::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  background-image: var(--page-bg-image);
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  opacity: 0.42;
+}
+
+body.menu-screen-page::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background: rgba(255, 248, 238, 0.46);
+}
+
+a {
+  color: inherit;
+}
+
+.menu-shell {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  padding: 5vh 5vw;
+  overflow: hidden;
+}
+
+.menu-sidebar {
+  width: min(54vw, 52rem);
+  min-width: 34rem;
+  max-height: 88vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 6vh 4.5vw 5vh;
+  background-color: var(--burgundy-dark);
+  background-image:
+    linear-gradient(rgba(21, 3, 6, 0.08), rgba(21, 3, 6, 0.08)),
+    var(--sidebar-bg-image);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border: 1px solid rgba(234, 220, 203, 0.22);
+  border-radius: 2rem;
+  box-shadow: 0 2.6vh 6.4vh rgba(36, 10, 16, 0.28);
+  overflow: hidden;
+}
+
+.sidebar-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin: 0 0 4.8vh;
+  text-decoration: none;
+}
+
+.sidebar-logo img {
+  width: min(16.5vw, 15rem);
+  min-width: 8.6rem;
+  height: auto;
+  display: block;
+  object-fit: contain;
+}
+
+.sidebar-nav {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.55vh 1.2vw;
+}
+
+.category-item,
+.list {
+  min-width: 0;
+}
+
+.category-item:nth-child(7) {
+  grid-column: 1 / -1;
+}
+
+.sidebar-link,
+.category-link {
+  width: 100%;
+  min-height: 8.6vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1vh 1.4vw;
+  border: 1px solid rgba(234, 220, 203, 0.2);
+  border-radius: 1.1rem;
+  background: linear-gradient(135deg, #fff8ee, #eadccb);
+  color: var(--burgundy-dark);
+  text-align: center;
+  text-decoration: none;
+  font-family: var(--menu-font-ar);
+  font-size: clamp(1rem, 1.25vw, 1.55rem);
+  font-weight: 400;
+  line-height: 1.15;
+  box-shadow: 0 1vh 2.3vh rgba(0, 0, 0, 0.14);
+  transition: transform 0.22s ease, box-shadow 0.22s ease, background 0.22s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.sidebar-link:hover,
+.category-link:hover {
+  transform: translateY(-0.25vh);
+  box-shadow: 0 1.3vh 3vh rgba(0, 0, 0, 0.18);
+}
+
+.list.active .category-link,
+.category-item.is-active .category-link {
+  background: var(--cream);
+  color: var(--burgundy-dark);
+  box-shadow: none;
+  transform: none;
+}
+
+.category-item::before,
+.category-item::after,
+.list::before,
+.list::after {
+  content: none !important;
+}
+
+.menu-content {
+  display: none;
+}
+
+.menu-welcome {
+  display: none;
+}
+
+body[class*="category-"] .menu-shell {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  grid-template-columns: 1fr;
+  place-items: stretch;
+  padding: 0;
+}
+
+body[class*="category-"] .menu-sidebar {
+  width: 100%;
+  min-width: 0;
+  max-height: none;
+  min-height: 11vh;
+  height: auto;
+  flex-direction: row;
+  justify-content: center;
+  gap: 1.6vw;
+  padding: 1.2vh 4vw;
+  background-color: var(--burgundy-dark);
+  background-image:
+    linear-gradient(rgba(21, 3, 6, 0.08), rgba(21, 3, 6, 0.08)),
+    var(--sidebar-bg-image);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border: 0;
+  border-radius: 0;
+  box-shadow: 0 1vh 2.6vh rgba(36, 10, 16, 0.18);
+  overflow: visible;
+}
+
+body[class*="category-"] .sidebar-logo {
+  width: auto;
+  flex: 0 0 auto;
+  margin: 0 0 0 1.6vw;
+}
+
+body[class*="category-"] .sidebar-logo img {
+  width: auto;
+  min-width: 0;
+  height: 9vh;
+  max-height: 6.2rem;
+}
+
+body[class*="category-"] .sidebar-nav {
+  flex: 1;
+  width: auto;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 0.72vw;
+}
+
+body[class*="category-"] .category-item,
+body[class*="category-"] .list {
+  width: auto;
+  min-width: 0;
+}
+
+body[class*="category-"] .category-item:nth-child(7) {
+  grid-column: auto;
+}
+
+body[class*="category-"] .sidebar-link,
+body[class*="category-"] .category-link {
+  min-width: 7.5vw;
+  min-height: 4.65vh;
+  padding: 0.55vh 1vw;
+  border-radius: 999px;
+  border: 1px solid rgba(234, 220, 203, 0.2);
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--beige);
+  font-size: clamp(0.72rem, 0.82vw, 0.98rem);
+  box-shadow: none;
+}
+
+body[class*="category-"] .sidebar-link:hover,
+body[class*="category-"] .category-link:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--cream);
+  transform: none;
+  box-shadow: none;
+}
+
+body[class*="category-"] .list.active .category-link,
+body[class*="category-"] .category-item.is-active .category-link {
+  background: var(--cream);
+  color: var(--burgundy-dark);
+  border-color: transparent;
+  box-shadow: none;
+  transform: none;
+}
+
+body[class*="category-"] .menu-content {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  padding: 2vh 5.2vw 3vh;
+  background: transparent;
+  overflow: hidden;
+}
+
+.menu-content-head {
+  min-height: 8.6vh;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 0.3vh;
+}
+
+.current-category {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25vh;
+  min-width: min(24vw, 22rem);
+  padding: 0.35vh 1.8vw 0.7vh;
+  color: var(--burgundy-dark);
+  text-align: center;
+}
+
+.current-category span {
+  font-family: var(--menu-font-ar);
+  font-size: clamp(1.22rem, 1.62vw, 2.12rem);
+  font-weight: 400;
+  line-height: 1.05;
+}
+
+.current-category small {
+  font-family: var(--menu-font-en);
+  font-size: clamp(0.62rem, 0.66vw, 0.88rem);
+  font-weight: 400;
+  color: rgba(36, 10, 16, 0.68);
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.products-shell {
+  position: relative;
+  height: calc(100% - 9vh);
+  overflow: visible;
+}
+
+.products-carousel {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.products-track {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  gap: 4vw;
+  align-items: flex-start;
+  overflow-x: auto;
+  overflow-y: visible;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  padding: 1.2vh 4.7vw 5vh;
+}
+
+.products-track::-webkit-scrollbar {
+  display: none;
+}
+
+.product-card {
+  flex: 0 0 calc((100% - 12vw) / 4);
+  min-width: 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  scroll-snap-align: start;
+  text-align: center;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  padding: 0;
+  overflow: visible;
+}
+
+.product-image {
+  width: 100%;
+  height: 21vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.1vh;
+  overflow: visible;
+}
+
+.product-image img {
+  width: 100%;
+  max-width: 13.5vw;
+  height: 100%;
+  max-height: 21vh;
+  display: block;
+  object-fit: contain;
+  object-position: center center;
+  transform-origin: center center;
+}
+
+.product-name {
+  min-height: 4.8vh;
+  margin: 0 0 0.85vh;
+  color: var(--burgundy-dark);
+  font-weight: 400;
+  line-height: 1.26;
+  text-align: center;
+  letter-spacing: 0;
+}
+
+.product-name span {
+  display: block;
+}
+
+.product-name-ar {
+  font-family: var(--menu-font-ar);
+  font-size: clamp(0.92rem, 0.98vw, 1.22rem);
+  line-height: 1.2;
+}
+
+.product-name-en {
+  margin-top: 0.58vh;
+  font-family: var(--menu-font-en);
+  font-size: clamp(0.68rem, 0.7vw, 0.9rem);
+  line-height: 1.05;
+}
+
+.product-description {
+  min-height: 3.5vh;
+  max-width: 92%;
+  margin: 0.65vh auto 0.35vh;
+  color: rgba(27, 5, 9, 0.76);
+  font-family: var(--menu-font-mixed);
+  font-size: clamp(0.56rem, 0.58vw, 0.76rem);
+  font-weight: 400;
+  line-height: 1.34;
+  text-align: center;
+}
+
+.product-meta {
+  min-height: 2.6vh;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  gap: 0.18vh;
+  align-items: center;
+  justify-content: center;
+  margin-top: 0.75vh;
+  margin-bottom: 0.2vh;
+  color: rgba(27, 5, 9, 0.58);
+  font-family: var(--menu-font-mixed);
+  font-size: clamp(0.52rem, 0.54vw, 0.68rem);
+  font-weight: 400;
+  line-height: 1.25;
+}
+
+.product-allergens,
+.product-calories {
+  display: block;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+
+.product-price {
+  margin: 1.05vh 0 0;
+  color: var(--gold);
+  font-family: var(--menu-font-en);
+  font-size: clamp(1.05rem, 1.18vw, 1.55rem);
+  font-weight: 400;
+  line-height: 1;
+}
+
+.category-hot-coffee .products-track {
+  gap: 4.8vw;
+  padding-inline: 5.4vw;
+}
+
+.category-hot-coffee .product-card {
+  flex-basis: calc((100% - 13.5vw) / 4);
+}
+
+.category-hot-coffee .product-image {
+  height: 20vh;
+}
+
+.category-hot-coffee .product-image img {
+  width: 11vw;
+  height: 20vh;
+  max-width: none;
+  max-height: none;
+  object-fit: contain;
+}
+
+.category-hot-coffee .product-image img[src*="arabic-coffee-dallah"],
+.category-hot-coffee .product-image img[src*="espresso-tray"] {
+  width: 15.4vw;
+  height: 22vh;
+  transform: scale(1.08);
+}
+
+.category-hot-coffee .product-image img[src*="saudi-coffee-cup-new"],
+.category-hot-coffee .product-image img[src*="tea-rouh-cup"],
+.category-hot-coffee .product-image img[src*="americano-rouh-cup"] {
+  width: 11.4vw;
+  height: 20vh;
+  transform: none;
+}
+
+.category-coffee-of-the-day .products-track {
+  justify-content: center;
+  gap: 7vw;
+  padding-inline: 12vw;
+  overflow-y: visible;
+}
+
+.category-coffee-of-the-day .product-card {
+  flex: 0 0 22vw;
+  max-width: 22vw;
+}
+
+.category-coffee-of-the-day .product-image,
+.category-cold-drinks .product-image,
+.category-drip-coffee .product-image {
+  height: 20.8vh;
+}
+
+.category-coffee-of-the-day .product-image {
+  height: 22.5vh;
+  margin-bottom: 1.2vh;
+}
+
+.category-coffee-of-the-day .product-image img,
+.category-cold-drinks .product-image img,
+.category-drip-coffee .product-image img {
+  width: 11.8vw;
+  height: 20.8vh;
+  max-width: none;
+  max-height: none;
+  object-fit: contain;
+}
+
+.category-coffee-of-the-day .product-image img {
+  width: 11.8vw;
+  height: 22.2vh;
+}
+
+.category-coffee-of-the-day .product-image img[src*="coffee-day-"] {
+  transform: none;
+}
+
+.category-cold-drinks .product-image img[src*="freddo-espresso"] {
+  transform: none;
+}
+
+.category-drip-coffee .product-image img[src*="v60-hot-chinese"],
+.category-drip-coffee .product-image img[src*="v60-cold-chinese"] {
+  transform: scale(1.38);
+}
+
+.category-dessert .products-track,
+.category-croissant .products-track,
+.category-cold-drinks .products-track {
+  gap: 4.2vw;
+}
+
+.category-dessert .product-image img,
+.category-croissant .product-image img,
+.category-cold-drinks .product-image img {
+  max-width: 15.6vw;
+}
+
+.drip-carousel .products-track,
+.drip-track {
+  gap: 0;
+  padding: 0.8vh 2.8vw 4.8vh;
+}
+
+.drip-harvest-slide {
+  flex: 0 0 100%;
+  height: 100%;
+  scroll-snap-align: start;
+  padding: 0 1.2vw;
+}
+
+.drip-harvest-layout {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 3.2vw;
+  align-items: start;
+}
+
+.drip-harvest-group {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.category-note,
+.drip-slide-note {
+  margin: 0 0 2.1vh;
+  color: var(--burgundy-dark);
+  font-family: var(--menu-font-ar);
+  font-size: clamp(1rem, 1.2vw, 1.55rem);
+  font-weight: 400;
+  line-height: 1.1;
+  text-align: center;
+}
+
+.drip-products-grid {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 2.2vw;
+}
+
+.drip-product-card .product-image {
+  height: 20vh;
+}
+
+.drip-product-card .product-image img {
+  width: 10.8vw;
+  height: 20vh;
+  max-width: none;
+  max-height: none;
+  object-fit: contain;
+}
+
+.carousel-arrow {
+  position: absolute;
+  top: 48%;
+  z-index: 12;
+  width: 4.8vh;
+  height: 4.8vh;
+  display: grid;
+  place-items: center;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(255, 248, 238, 0.92);
+  color: var(--burgundy-dark);
+  font-family: var(--menu-font-ar);
+  font-size: 2rem;
+  font-weight: 400;
+  line-height: 1;
+  cursor: pointer;
+  transform: translateY(-50%);
+  box-shadow: 0 0.8vh 2.2vh rgba(36, 10, 16, 0.12);
+}
+
+.carousel-arrow.prev {
+  right: 1vw;
+}
+
+.carousel-arrow.next {
+  left: 1vw;
+}
+
+.carousel-dots {
+  position: absolute;
+  left: 50%;
+  bottom: 1.2vh;
+  z-index: 10;
+  display: flex;
+  gap: 0.55vw;
+  transform: translateX(-50%);
+}
+
+.carousel-dot {
+  width: 0.68rem;
+  height: 0.68rem;
+  border-radius: 999px;
+  background: rgba(36, 10, 16, 0.22);
+}
+
+.carousel-dot.is-active {
+  background: var(--gold);
+}
+
+.empty-state {
+  min-height: 54vh;
+  display: grid;
+  place-items: center;
+  color: rgba(36, 10, 16, 0.64);
+  text-align: center;
+  font-size: clamp(1rem, 1.25vw, 1.7rem);
+  font-weight: 400;
+}
+
+@media (max-width: 900px) {
+  body.menu-screen-page {
+    height: auto;
+    min-height: 100vh;
+    overflow: auto;
+  }
+
+  .menu-shell {
+    min-height: 100vh;
+    height: auto;
+    padding: 4vh 4vw;
+  }
+
+  .menu-sidebar {
+    width: min(100%, 34rem);
+    min-width: 0;
+    padding: 3.6vh 5vw;
+  }
+
+  .sidebar-nav {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.15vh 2.4vw;
+  }
+
+  .sidebar-logo {
+    margin-bottom: 3.2vh;
+  }
+
+  .sidebar-logo img {
+    width: min(38vw, 10.8rem);
+    min-width: 7.4rem;
+  }
+
+  .sidebar-link,
+  .category-link {
+    min-height: 6.7vh;
+    padding: 0.9vh 2.2vw;
+    font-size: clamp(0.88rem, 3.4vw, 1.16rem);
+  }
+
+  body[class*="category-"] .menu-shell {
+    min-height: 100vh;
+    padding: 0;
+  }
+
+  body[class*="category-"] .menu-sidebar {
+    flex-direction: column;
+    gap: 1.45vh;
+    padding: 2.8vh 4vw 2.4vh;
+  }
+
+  body[class*="category-"] .sidebar-nav {
+    width: min(100%, 38rem);
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1vh 2.4vw;
+  }
+
+  body[class*="category-"] .category-item:nth-child(7) {
+    grid-column: 1 / -1;
+  }
+
+  body[class*="category-"] .sidebar-logo {
+    margin: 0;
+  }
+
+  body[class*="category-"] .sidebar-logo img {
+    height: 9.2vh;
+    max-height: 5.8rem;
+  }
+
+  body[class*="category-"] .sidebar-link,
+  body[class*="category-"] .category-link {
+    width: 100%;
+    min-width: 0;
+    min-height: 5.4vh;
+    padding: 0.72vh 2.2vw;
+    font-size: clamp(0.78rem, 2.9vw, 0.98rem);
+  }
+
+  body[class*="category-"] .menu-content {
+    height: auto;
+    min-height: 70vh;
+    padding: 3vh 5vw 6vh;
+    overflow: visible;
+  }
+
+  .products-shell {
+    height: auto;
+  }
+
+  .products-track {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 4vh 5vw;
+    overflow: visible;
+    padding: 2vh 0;
+  }
+
+  .product-card {
+    height: auto;
+  }
+
+  .product-image,
+  .category-hot-coffee .product-image,
+  .category-coffee-of-the-day .product-image,
+  .category-cold-drinks .product-image,
+  .category-drip-coffee .product-image,
+  .drip-product-card .product-image {
+    height: 19.5vh;
+  }
+
+  .product-image img,
+  .category-hot-coffee .product-image img,
+  .category-hot-coffee .product-image img[src*="arabic-coffee-dallah"],
+  .category-hot-coffee .product-image img[src*="espresso-tray"],
+  .category-hot-coffee .product-image img[src*="saudi-coffee-cup-new"],
+  .category-hot-coffee .product-image img[src*="tea-rouh-cup"],
+  .category-hot-coffee .product-image img[src*="americano-rouh-cup"],
+  .category-coffee-of-the-day .product-image img,
+  .category-cold-drinks .product-image img,
+  .category-drip-coffee .product-image img,
+  .drip-product-card .product-image img {
+    width: 34vw;
+    max-width: 12rem;
+    height: 19.5vh;
+    max-height: 13rem;
+    transform: none;
+    object-fit: contain;
+  }
+
+  .drip-harvest-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* =========================================================
+   تعديلات الصفحة الرئيسية + إصلاح ترتيب الجوال
+   ========================================================= */
+
+:root {
+  --sidebar-bg-image: url("../images/sidebar-burgundy-pattern.png");
+}
+
+/* الصفحة الرئيسية فقط: الخلفية نفس نقشة الكرت */
+body.menu-home-page {
+  background-color: #160209 !important;
+  background-image:
+    linear-gradient(rgba(21, 3, 6, 0.08), rgba(21, 3, 6, 0.08)),
+    var(--sidebar-bg-image) !important;
+  background-size: cover !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+}
+
+body.menu-home-page::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  background-image:
+    linear-gradient(rgba(21, 3, 6, 0.08), rgba(21, 3, 6, 0.08)),
+    var(--sidebar-bg-image) !important;
+  background-size: cover !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+  opacity: 1 !important;
+}
+
+body.menu-home-page::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background: transparent !important;
+}
+
+/* حذف شكل الكرت من صفحة الأزرار فقط */
+body.menu-home-page .menu-sidebar {
+  background: transparent !important;
+  background-image: none !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* صفحات المنتجات تبقى بيج */
+body.menu-screen-page:not(.menu-home-page) {
+  background: var(--page-bg-color) !important;
+}
+
+body.menu-screen-page:not(.menu-home-page)::before {
+  background-image: var(--page-bg-image) !important;
+  background-position: center !important;
+  background-size: cover !important;
+  background-repeat: no-repeat !important;
+  opacity: 0.42 !important;
+}
+
+body.menu-screen-page:not(.menu-home-page)::after {
+  background: rgba(255, 248, 238, 0.46) !important;
+}
+
+/* =========================================================
+   الجوال: ترتيب مريح ومتساوي لصفحات المنتجات
+   ========================================================= */
+@media (max-width: 768px) {
+  html,
+  body.menu-screen-page:not(.menu-home-page) {
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    min-height: 100vh !important;
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+  }
+
+  body[class*="category-"] .menu-shell {
+    width: 100% !important;
+    min-height: 100vh !important;
+    height: auto !important;
+    display: block !important;
+    padding: 0 !important;
+    overflow: visible !important;
+  }
+
+  body[class*="category-"] .menu-sidebar {
+    width: 100% !important;
+    min-height: auto !important;
+    padding: 18px 16px !important;
+    overflow: hidden !important;
+  }
+
+  body[class*="category-"] .sidebar-nav {
+    width: 100% !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 10px !important;
+  }
+
+  body[class*="category-"] .sidebar-link,
+  body[class*="category-"] .category-link {
+    min-height: 42px !important;
+    padding: 8px 10px !important;
+    font-size: 14px !important;
+  }
+
+  body[class*="category-"] .menu-content {
+    height: auto !important;
+    min-height: 0 !important;
+    padding: 18px 0 44px !important;
+    overflow: visible !important;
+  }
+
+  .menu-content-head {
+    min-height: 0 !important;
+    padding: 0 16px 16px !important;
+  }
+
+  .current-category {
+    min-width: 0 !important;
+    padding: 0 !important;
+  }
+
+  .current-category span {
+    font-size: 24px !important;
+    line-height: 1.2 !important;
+  }
+
+  .current-category small {
+    font-size: 12px !important;
+  }
+
+  .products-shell,
+  .products-carousel {
+    width: 100% !important;
+    height: auto !important;
+    overflow: visible !important;
+  }
+
+  .carousel-arrow,
+  .carousel-dots {
+    display: none !important;
+  }
+
+  .products-track {
+    width: 100% !important;
+    height: auto !important;
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 32px 14px !important;
+    padding: 12px 16px 40px !important;
+    overflow: visible !important;
+    scroll-snap-type: none !important;
+  }
+
+  .product-card {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    flex: none !important;
+    display: grid !important;
+    grid-template-rows: 126px 58px minmax(112px, auto) 28px 34px !important;
+    align-items: start !important;
+    justify-items: center !important;
+    row-gap: 6px !important;
+    text-align: center !important;
+    scroll-snap-align: none !important;
+  }
+
+  .product-image,
+  .category-hot-coffee .product-image,
+  .category-coffee-of-the-day .product-image,
+  .category-cold-drinks .product-image,
+  .category-drip-coffee .product-image,
+  .drip-product-card .product-image {
+    grid-row: 1 !important;
+    width: 100% !important;
+    height: 126px !important;
+    margin: 0 !important;
+  }
+
+  .product-image img,
+  .category-hot-coffee .product-image img,
+  .category-hot-coffee .product-image img[src*="arabic-coffee-dallah"],
+  .category-hot-coffee .product-image img[src*="espresso-tray"],
+  .category-hot-coffee .product-image img[src*="saudi-coffee-cup-new"],
+  .category-hot-coffee .product-image img[src*="tea-rouh-cup"],
+  .category-hot-coffee .product-image img[src*="americano-rouh-cup"],
+  .category-coffee-of-the-day .product-image img,
+  .category-cold-drinks .product-image img,
+  .category-drip-coffee .product-image img,
+  .drip-product-card .product-image img {
+    width: 100% !important;
+    max-width: 132px !important;
+    height: 126px !important;
+    max-height: 126px !important;
+    object-fit: contain !important;
+    transform: none !important;
+    margin: 0 auto !important;
+  }
+
+  .product-name {
+    grid-row: 2 !important;
+    width: 100% !important;
+    min-height: 58px !important;
+    margin: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    overflow: hidden !important;
+  }
+
+  .product-name-ar {
+    font-size: 15px !important;
+    line-height: 1.25 !important;
+  }
+
+  .product-name-en {
+    margin-top: 4px !important;
+    font-size: 10.5px !important;
+    line-height: 1.15 !important;
+  }
+
+  .product-description {
+    grid-row: 3 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-height: 112px !important;
+    margin: 0 auto !important;
+    padding: 0 2px !important;
+    color: rgba(27, 5, 9, 0.76) !important;
+    text-align: center !important;
+    overflow-wrap: break-word !important;
+  }
+
+  .product-meta {
+    grid-row: 4 !important;
+    min-height: 28px !important;
+    margin: 0 !important;
+    font-size: 11px !important;
+    line-height: 1.25 !important;
+  }
+
+  .product-price {
+    grid-row: 5 !important;
+    margin: 0 !important;
+    align-self: end !important;
+    color: var(--gold) !important;
+    font-size: 17px !important;
+    line-height: 1.1 !important;
+  }
+}
+
+/* =========================================================
+   الجوال: دريب كوفي كل محصول لحاله تحت بعض
+   ========================================================= */
+@media (max-width: 768px) {
+  .category-drip-coffee .products-track,
+  .category-drip-coffee .drip-track {
+    display: block !important;
+    width: 100% !important;
+    height: auto !important;
+    padding: 0 16px 44px !important;
+    overflow: visible !important;
+    scroll-snap-type: none !important;
+  }
+
+  .category-drip-coffee .drip-harvest-slide {
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    flex: none !important;
+    display: block !important;
+    padding: 0 !important;
+    scroll-snap-align: none !important;
+  }
+
+  .category-drip-coffee .drip-harvest-layout {
+    width: 100% !important;
+    height: auto !important;
+    display: block !important;
+  }
+
+  .category-drip-coffee .drip-harvest-group {
+    width: 100% !important;
+    display: block !important;
+    margin: 0 0 42px !important;
+  }
+
+  .category-drip-coffee .drip-slide-note {
+    width: 100% !important;
+    margin: 18px 0 18px !important;
+    color: var(--burgundy-dark) !important;
+    text-align: center !important;
+    font-size: 23px !important;
+    line-height: 1.25 !important;
+  }
+
+  .category-drip-coffee .drip-products-grid {
+    width: 100% !important;
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 30px 14px !important;
+    padding: 0 !important;
+  }
+
+  .category-drip-coffee .drip-product-card {
+    display: grid !important;
+    grid-template-rows: 126px 62px minmax(132px, auto) 28px 34px !important;
+    row-gap: 6px !important;
+  }
+
+  .category-drip-coffee .drip-product-card .product-name {
+    min-height: 62px !important;
+  }
+
+  .category-drip-coffee .drip-product-card .product-description {
+    min-height: 132px !important;
+  }
+}
+
+
+/* =========================================================
+   V2 إصلاح دريب كوفي للجوال: كل محصول لوحده تحت بعض
+   ========================================================= */
+.drip-mobile-sections {
+  display: none;
+}
+
+@media (max-width: 1000px) {
+  body.category-drip-coffee .drip-desktop-carousel {
+    display: none !important;
+  }
+
+  body.category-drip-coffee .drip-mobile-sections {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 0 18px 56px !important;
+    overflow: visible !important;
+  }
+
+  body.category-drip-coffee .drip-mobile-sections .drip-harvest-group {
+    display: block !important;
+    width: 100% !important;
+    margin: 0 0 48px !important;
+    padding: 0 !important;
+  }
+
+  body.category-drip-coffee .drip-mobile-sections .drip-slide-note {
+    display: block !important;
+    width: 100% !important;
+    margin: 24px 0 18px !important;
+    color: var(--burgundy-dark) !important;
+    text-align: center !important;
+    font-size: 22px !important;
+    line-height: 1.25 !important;
+  }
+
+  body.category-drip-coffee .drip-mobile-sections .drip-products-grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 30px 16px !important;
+    width: 100% !important;
+    padding: 0 !important;
+  }
+
+  body.category-drip-coffee .drip-mobile-sections .drip-product-card {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    display: grid !important;
+    grid-template-rows: 128px 64px minmax(128px, auto) 26px 34px !important;
+    align-items: start !important;
+    justify-items: center !important;
+    row-gap: 6px !important;
+    text-align: center !important;
+  }
+
+  body.category-drip-coffee .drip-mobile-sections .product-image {
+    grid-row: 1 !important;
+    width: 100% !important;
+    height: 128px !important;
+    margin: 0 !important;
+  }
+
+  body.category-drip-coffee .drip-mobile-sections .product-image img {
+    width: 100% !important;
+    max-width: 132px !important;
+    height: 128px !important;
+    max-height: 128px !important;
+    object-fit: contain !important;
+    transform: none !important;
+    margin: 0 auto !important;
+  }
+
+  body.category-drip-coffee .drip-mobile-sections .product-name {
+    grid-row: 2 !important;
+    width: 100% !important;
+    min-height: 64px !important;
+    margin: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    overflow: hidden !important;
+  }
+
+  body.category-drip-coffee .drip-mobile-sections .product-name-ar {
+    font-size: 15px !important;
+    line-height: 1.25 !important;
+  }
+
+  body.category-drip-coffee .drip-mobile-sections .product-name-en {
+    margin-top: 4px !important;
+    font-size: 10.5px !important;
+    line-height: 1.15 !important;
+  }
+
+  body.category-drip-coffee .drip-mobile-sections .product-description {
+    grid-row: 3 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-height: 128px !important;
+    margin: 0 !important;
+    padding: 0 2px !important;
+    text-align: center !important;
+    color: rgba(27, 5, 9, 0.76) !important;
+    overflow-wrap: break-word !important;
+  }
+
+  body.category-drip-coffee .drip-mobile-sections .product-meta {
+    grid-row: 4 !important;
+    min-height: 26px !important;
+    margin: 0 !important;
+    font-size: 11px !important;
+    line-height: 1.25 !important;
+  }
+
+  body.category-drip-coffee .drip-mobile-sections .product-price {
+    grid-row: 5 !important;
+    margin: 0 !important;
+    align-self: end !important;
+    color: var(--gold) !important;
+    font-size: 17px !important;
+    line-height: 1.1 !important;
+  }
+}
+
+@media (min-width: 1001px) {
+  body.category-drip-coffee .drip-mobile-sections {
+    display: none !important;
+  }
+}

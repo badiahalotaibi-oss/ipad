@@ -1,0 +1,269 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>روح سويت</title>
+
+    <link rel="stylesheet" href="{% static 'css/ipad-menu.css' %}?v=20260708-welcome">
+
+    <style>
+        .product-description {
+            white-space: pre-line !important;
+            font-size: 12px !important;
+            line-height: 1.5 !important;
+            max-width: 520px;
+            margin: 10px auto 8px;
+            text-align: center;
+        }
+
+        .menu-welcome {
+            width: 100%;
+            height: 100%;
+        }
+
+        .menu-welcome-text {
+            width: 100%;
+            min-height: 75vh;
+            display: flex !important;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: #f7f0e8;
+        }
+
+        .menu-welcome-text p {
+            margin: 0 0 32px !important;
+            font-size: clamp(36px, 5vw, 64px) !important;
+            line-height: 1.7 !important;
+            font-weight: 700 !important;
+            color: #f7f0e8 !important;
+            letter-spacing: 1px;
+        }
+
+        .menu-heart {
+            display: inline-block;
+            margin-right: 10px;
+            color: #f7f0e8;
+            font-size: 0.85em;
+            vertical-align: middle;
+        }
+
+        .browse-menu-btn {
+            display: inline-flex !important;
+            align-items: center;
+            justify-content: center;
+            width: min(420px, 70vw);
+            height: 68px;
+            border: 0;
+            border-radius: 18px;
+            background: #f7f0e8 !important;
+            color: #2b1016 !important;
+            font-size: 22px !important;
+            font-weight: 700 !important;
+            text-decoration: none !important;
+            cursor: pointer;
+            transition: 0.25s ease;
+        }
+
+        .browse-menu-btn:hover {
+            transform: translateY(-2px);
+            opacity: 0.95;
+        }
+        .menu-home-page .menu-content {
+    display: none !important;
+}
+
+.menu-home-page .menu-sidebar {
+    width: 100% !important;
+    max-width: none !important;
+    min-height: 100vh !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-align: center !important;
+}
+
+.home-cta {
+    margin-top: 35px;
+    text-align: center;
+}
+
+.home-slogan {
+    margin: 0 0 30px !important;
+    color: #f7f0e8 !important;
+    font-size: clamp(36px, 5vw, 64px) !important;
+    line-height: 1.6 !important;
+    font-weight: 200 !important;
+}
+.home-heart {
+    display: inline-block;
+    margin-right: 8px;
+    color: #f7f0e8;
+    font-size: 0.85em;
+}
+
+.home-browse-btn {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    width: min(420px, 70vw);
+    height: 68px;
+    border-radius: 18px;
+    background: #f7f0e8 !important;
+    color: #2b1016 !important;
+    font-size: 22px !important;
+    font-weight: 700 !important;
+    text-decoration: none !important;
+}
+.menu-home-page::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: rgba(20, 5, 10, 0.25);
+    z-index: 0;
+    pointer-events: none;
+}
+
+.menu-home-page .menu-shell {
+    position: relative;
+    z-index: 1;
+}
+/* لمعة ناعمة على عبارة من روحنا */
+.home-slogan {
+    position: relative;
+    font-weight: 300 !important;
+    background: linear-gradient(
+        90deg,
+        #f7f0e8 0%,
+        #ffffff 35%,
+        #d8b778 50%,
+        #ffffff 65%,
+        #f7f0e8 100%
+    );
+    background-size: 240% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent !important;
+    animation: sloganShine 4s ease-in-out infinite;
+    text-shadow: 0 0 16px rgba(247, 240, 232, 0.18);
+}
+
+@keyframes sloganShine {
+    0% {
+        background-position: 120% 0;
+    }
+    50% {
+        background-position: -120% 0;
+    }
+    100% {
+        background-position: -120% 0;
+    }
+}
+
+/* لمعة تمر على زر تصفح قائمتنا */
+.home-browse-btn {
+    position: relative;
+    overflow: hidden;
+}
+
+.home-browse-btn::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: -90%;
+    width: 45%;
+    height: 100%;
+    background: linear-gradient(
+        120deg,
+        transparent,
+        rgba(255, 255, 255, 0.8),
+        transparent
+    );
+    transform: skewX(-24deg);
+    animation: buttonShine 3s ease-in-out infinite;
+}
+
+@keyframes buttonShine {
+    0% {
+        right: -90%;
+    }
+    55% {
+        right: -90%;
+    }
+    100% {
+        right: 130%;
+    }
+}
+    </style>
+</head>
+
+<body class="menu-screen-page menu-home-page">
+    <main class="menu-shell">
+<aside class="menu-sidebar" aria-label="أقسام المنيو">
+    <a class="sidebar-logo" href="/">
+        {% if menu_settings.logo %}
+            <img src="{{ menu_settings.logo.url }}" alt="شعار روح سويت">
+        {% else %}
+            <img src="{% static 'images/logo.png' %}" alt="شعار روح سويت">
+        {% endif %}
+    </a>
+
+    <div class="home-cta">
+        <p class="home-slogan">
+            من روحنا .. لذوقك
+            <span class="home-heart">♥</span>
+        </p>
+
+        <a class="home-browse-btn" href="/category/hot-coffee/">
+            تصفح قائمتنا
+        </a>
+    </div>
+</aside>        <section class="menu-content">
+            <div class="menu-welcome">
+                <div class="menu-welcome-text">
+                    <p>
+                        من روحنا .. لذوقك
+                        <span class="menu-heart">♥</span>
+                    </p>
+
+                    <a class="browse-menu-btn" href="/category/hot-coffee/">
+                        تصفح قائمتنا
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const currentPath = window.location.pathname.replace(/\/$/, "");
+            const list = document.querySelectorAll(".list");
+
+            for (let i = 0; i < list.length; i++) {
+                const link = list[i].querySelector(".category-link");
+                const linkPath = link ? new URL(link.href).pathname.replace(/\/$/, "") : "";
+
+                list[i].classList.remove("active", "is-active");
+
+                if (linkPath === currentPath) {
+                    list[i].classList.add("active", "is-active");
+                }
+
+                list[i].onclick = function () {
+                    let j = 0;
+
+                    while (j < list.length) {
+                        list[j++].classList.remove("active", "is-active");
+                    }
+
+                    list[i].classList.add("active", "is-active");
+                };
+            }
+        });
+    </script>
+</body>
+</html>

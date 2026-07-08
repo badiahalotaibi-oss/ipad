@@ -1,0 +1,143 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>روح سويت</title>
+
+<link rel="stylesheet" href="{% static 'css/ipad-menu.css' %}?v=20260708-mobile-v2">
+.menu-welcome {
+    width: 100%;
+    height: 100%;
+}
+
+.menu-welcome-text {
+    width: 100%;
+    min-height: 70vh;
+    display: flex !important;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: #f7f0e8;
+}
+
+.menu-welcome-text p {
+    margin: 0 0 30px !important;
+    font-size: 54px !important;
+    line-height: 1.7 !important;
+    font-weight: 700 !important;
+    color: #f7f0e8 !important;
+}
+
+.menu-heart {
+    margin-right: 10px;
+    color: #f7f0e8;
+}
+
+.browse-menu-btn {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    width: 380px;
+    height: 68px;
+    border-radius: 18px;
+    background: #f7f0e8 !important;
+    color: #2b1016 !important;
+    font-size: 22px !important;
+    font-weight: 700 !important;
+    text-decoration: none !important;
+}
+<style>
+    .product-description {
+        white-space: pre-line !important;
+        font-size: 12px !important;
+        line-height: 1.5 !important;
+        max-width: 520px;
+        margin: 10px auto 8px;
+        text-align: center;
+    }
+</style>
+</head>
+<body class="menu-screen-page menu-home-page">
+    <main class="menu-shell">
+        <aside class="menu-sidebar" aria-label="أقسام المنيو">
+            <a class="sidebar-logo" href="/">
+                {% if menu_settings.logo %}
+                    <img src="{{ menu_settings.logo.url }}" alt="شعار روح سويت">
+                {% else %}
+                    <img src="{% static 'images/logo.png' %}" alt="شعار روح سويت">
+                {% endif %}
+            </a>
+
+            <nav class="sidebar-nav">
+                <div class="category-item list">
+                    <a class="sidebar-link category-link" href="/category/hot-coffee/">قهوة</a>
+                </div>
+                <div class="category-item list">
+                    <a class="sidebar-link category-link" href="/category/coffee-of-the-day/">قهوة اليوم</a>
+                </div>
+                <div class="category-item list">
+                    <a class="sidebar-link category-link" href="/category/drip-coffee/">دريب كوفي</a>
+                </div>
+                <div class="category-item list">
+                    <a class="sidebar-link category-link" href="/category/cold-drinks/">مشروبات باردة</a>
+                </div>
+                <div class="category-item list">
+                    <a class="sidebar-link category-link" href="/category/dessert/">حلا</a>
+                </div>
+                <div class="category-item list">
+                    <a class="sidebar-link category-link" href="/category/croissant/">كراوسون</a>
+                </div>
+                <div class="category-item list">
+                    <a class="sidebar-link category-link" href="/category/breakfast/">قائمة الفطور</a>
+                </div>
+            </nav>
+        </aside>
+
+<section class="menu-content">
+    <div class="menu-welcome">
+        <div class="menu-welcome-text">
+            <p>
+                من روحنا .. لذوقك
+                <span class="menu-heart">♥</span>
+            </p>
+
+            <a class="browse-menu-btn" href="/category/hot-coffee/">
+                تصفح قائمتنا
+            </a>
+        </div>
+    </div>
+</section>    </main>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const currentPath = window.location.pathname.replace(/\/$/, "");
+            const list = document.querySelectorAll(".list");
+
+            for (let i = 0; i < list.length; i++) {
+                const link = list[i].querySelector(".category-link");
+                const linkPath = link ? new URL(link.href).pathname.replace(/\/$/, "") : "";
+
+                list[i].classList.remove("active", "is-active");
+
+                if (linkPath === currentPath) {
+                    list[i].classList.add("active", "is-active");
+                }
+
+                list[i].onclick = function () {
+                    let j = 0;
+
+                    while (j < list.length) {
+                        list[j++].classList.remove("active", "is-active");
+                    }
+
+                    list[i].classList.add("active", "is-active");
+                };
+            }
+        });
+    </script>
+
+</body>
+</html>

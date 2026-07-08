@@ -1,0 +1,494 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ category_label.name_ar }} | {{ category_label.name_en }}</title>
+
+    <link rel="stylesheet" href="{% static 'css/ipad-menu.css' %}?v=20260707-asdf-bg">
+
+    <style>
+        /* إصلاح وصف المنتج حتى لا يطلع فوق بعض */
+        .product-card,
+        .drip-product-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .product-description {
+            width: min(90%, 520px);
+            max-width: 520px;
+            margin: 1.2vh auto 0.8vh;
+            padding: 0 1vw;
+
+            display: block;
+            position: static !important;
+            transform: none !important;
+
+            text-align: center;
+            direction: rtl;
+            line-height: 1.8;
+            font-size: clamp(13px, 1.15vw, 18px);
+
+            white-space: normal !important;
+            overflow-wrap: break-word;
+            word-break: normal;
+        }
+
+        .product-meta {
+            margin-top: 0.8vh;
+            line-height: 1.5;
+            text-align: center;
+        }
+
+        .product-price {
+            margin-top: 1vh;
+            line-height: 1.2;
+            text-align: center;
+        }
+    </style>
+</head>
+<body class="menu-screen-page category-{{ category_label.slug }}">
+
+    <main class="menu-shell">
+        <aside class="menu-sidebar" aria-label="أقسام المنيو">
+            <a class="sidebar-logo" href="/">
+                <img src="{% static 'images/logo.png' %}" alt="شعار روح سويت">
+            </a>
+
+            <nav class="sidebar-nav">
+                <div class="category-item list{% if category_label.slug == 'hot-coffee' %} active is-active{% endif %}">
+                    <a class="sidebar-link category-link" href="/category/hot-coffee/">قهوة</a>
+                </div>
+
+                <div class="category-item list{% if category_label.slug == 'coffee-of-the-day' %} active is-active{% endif %}">
+                    <a class="sidebar-link category-link" href="/category/coffee-of-the-day/">قهوة اليوم</a>
+                </div>
+
+                <div class="category-item list{% if category_label.slug == 'drip-coffee' %} active is-active{% endif %}">
+                    <a class="sidebar-link category-link" href="/category/drip-coffee/">دريب كوفي</a>
+                </div>
+
+                <div class="category-item list{% if category_label.slug == 'cold-drinks' %} active is-active{% endif %}">
+                    <a class="sidebar-link category-link" href="/category/cold-drinks/">مشروبات باردة</a>
+                </div>
+
+                <div class="category-item list{% if category_label.slug == 'dessert' %} active is-active{% endif %}">
+                    <a class="sidebar-link category-link" href="/category/dessert/">حلا</a>
+                </div>
+
+                <div class="category-item list{% if category_label.slug == 'croissant' %} active is-active{% endif %}">
+                    <a class="sidebar-link category-link" href="/category/croissant/">كراوسون</a>
+                </div>
+
+                <div class="category-item list{% if category_label.slug == 'breakfast' %} active is-active{% endif %}">
+                    <a class="sidebar-link category-link" href="/category/breakfast/">قائمة الفطور</a>
+                </div>
+            </nav>
+        </aside>
+
+        <section class="menu-content">
+            <div class="menu-content-head">
+                <div class="current-category">
+                    <span>{{ category_label.name_ar }}</span>
+                    <small>{{ category_label.name_en }}</small>
+                </div>
+            </div>
+
+            <section class="products-shell">
+                {% if menu_images %}
+                    {% if category_label.slug == 'drip-coffee' %}
+
+                        <div class="products-carousel drip-carousel" data-products-carousel>
+                            <button class="carousel-arrow prev" type="button" data-carousel-prev aria-label="السابق">‹</button>
+
+                            <div class="products-track drip-track" data-carousel-track>
+
+                                <section class="drip-harvest-slide">
+                                    <div class="drip-harvest-layout">
+
+                                        <div class="drip-harvest-group">
+                                            <p class="category-note drip-slide-note">محصول العنب الفاخر</p>
+
+                                            <div class="drip-products-grid">
+                                                {% for item in menu_images %}
+                                                    {% if item.display_order <= 2 %}
+                                                        <article class="product-card drip-product-card">
+                                                            <div class="product-image">
+                                                                <img src="{{ item.image.url }}" alt="{% if item.alt_text %}{{ item.alt_text }}{% elif item.title %}{{ item.title }}{% else %}{{ item.title_en }}{% endif %}">
+                                                            </div>
+
+                                                            {% if item.title or item.title_en %}
+                                                                <h2 class="product-name">
+                                                                    {% if item.title %}
+                                                                        {% if item.title_en %}
+                                                                            <span class="product-name-ar">{{ item.title }}</span>
+                                                                        {% else %}
+                                                                            {% for title_line in item.title.splitlines %}
+                                                                                <span class="{% if forloop.first %}product-name-ar{% else %}product-name-en{% endif %}">{{ title_line }}</span>
+                                                                            {% endfor %}
+                                                                        {% endif %}
+                                                                    {% endif %}
+
+                                                                    {% if item.title_en %}
+                                                                        <span class="product-name-en">{{ item.title_en }}</span>
+                                                                    {% endif %}
+                                                                </h2>
+                                                            {% endif %}
+
+                                                            {% if item.description %}
+<p class="product-description" style="white-space: pre-line !important; font-size: 12px !important; line-height: 1.5 !important;">
+    {{ item.description }}
+</p>                                                            {% elif item.alt_text %}
+                                                                <p class="product-description">{{ item.alt_text }}</p>
+                                                            {% endif %}
+
+                                                            {% if item.calories or item.allergens %}
+                                                                <div class="product-meta">
+                                                                    {% if item.calories %}
+                                                                        <span class="product-calories">{{ item.calories }} cal</span>
+                                                                    {% endif %}
+
+                                                                    {% if item.allergens %}
+                                                                        <span class="product-allergens">الحساسية: {{ item.allergens }}</span>
+                                                                    {% endif %}
+                                                                </div>
+                                                            {% endif %}
+
+                                                            {% if item.price %}
+                                                                <p class="product-price">{{ item.price|floatformat:"-2" }} SR</p>
+                                                            {% endif %}
+                                                        </article>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </div>
+                                        </div>
+
+                                        <div class="drip-harvest-group">
+                                            <p class="category-note drip-slide-note">محصول الصيني</p>
+
+                                            <div class="drip-products-grid">
+                                                {% for item in menu_images %}
+                                                    {% if item.display_order > 2 and item.display_order <= 4 %}
+                                                        <article class="product-card drip-product-card">
+                                                            <div class="product-image">
+                                                                <img src="{{ item.image.url }}" alt="{% if item.alt_text %}{{ item.alt_text }}{% elif item.title %}{{ item.title }}{% else %}{{ item.title_en }}{% endif %}">
+                                                            </div>
+
+                                                            {% if item.title or item.title_en %}
+                                                                <h2 class="product-name">
+                                                                    {% if item.title %}
+                                                                        {% if item.title_en %}
+                                                                            <span class="product-name-ar">{{ item.title }}</span>
+                                                                        {% else %}
+                                                                            {% for title_line in item.title.splitlines %}
+                                                                                <span class="{% if forloop.first %}product-name-ar{% else %}product-name-en{% endif %}">{{ title_line }}</span>
+                                                                            {% endfor %}
+                                                                        {% endif %}
+                                                                    {% endif %}
+
+                                                                    {% if item.title_en %}
+                                                                        <span class="product-name-en">{{ item.title_en }}</span>
+                                                                    {% endif %}
+                                                                </h2>
+                                                            {% endif %}
+
+                                                            {% if item.description %}
+<p class="product-description" style="white-space: pre-line !important; font-size: 12px !important; line-height: 1.5 !important;">
+    {{ item.description }}
+</p>                                                            {% elif item.alt_text %}
+                                                                <p class="product-description">{{ item.alt_text }}</p>
+                                                            {% endif %}
+
+                                                            {% if item.calories or item.allergens %}
+                                                                <div class="product-meta">
+                                                                    {% if item.calories %}
+                                                                        <span class="product-calories">{{ item.calories }} cal</span>
+                                                                    {% endif %}
+
+                                                                    {% if item.allergens %}
+                                                                        <span class="product-allergens">الحساسية: {{ item.allergens }}</span>
+                                                                    {% endif %}
+                                                                </div>
+                                                            {% endif %}
+
+                                                            {% if item.price %}
+                                                                <p class="product-price">{{ item.price|floatformat:"-2" }} SR</p>
+                                                            {% endif %}
+                                                        </article>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </section>
+
+                                <section class="drip-harvest-slide">
+                                    <div class="drip-harvest-layout">
+
+                                        <div class="drip-harvest-group">
+                                            <p class="category-note drip-slide-note">محصول كولمبي</p>
+
+                                            <div class="drip-products-grid">
+                                                {% for item in menu_images %}
+                                                    {% if item.display_order > 4 and item.display_order <= 6 %}
+                                                        <article class="product-card drip-product-card">
+                                                            <div class="product-image">
+                                                                <img src="{{ item.image.url }}" alt="{% if item.alt_text %}{{ item.alt_text }}{% elif item.title %}{{ item.title }}{% else %}{{ item.title_en }}{% endif %}">
+                                                            </div>
+
+                                                            {% if item.title or item.title_en %}
+                                                                <h2 class="product-name">
+                                                                    {% if item.title %}
+                                                                        {% if item.title_en %}
+                                                                            <span class="product-name-ar">{{ item.title }}</span>
+                                                                        {% else %}
+                                                                            {% for title_line in item.title.splitlines %}
+                                                                                <span class="{% if forloop.first %}product-name-ar{% else %}product-name-en{% endif %}">{{ title_line }}</span>
+                                                                            {% endfor %}
+                                                                        {% endif %}
+                                                                    {% endif %}
+
+                                                                    {% if item.title_en %}
+                                                                        <span class="product-name-en">{{ item.title_en }}</span>
+                                                                    {% endif %}
+                                                                </h2>
+                                                            {% endif %}
+
+                                                            {% if item.description %}
+<p class="product-description" style="white-space: pre-line !important; font-size: 12px !important; line-height: 1.5 !important;">
+    {{ item.description }}
+</p>                                                            {% elif item.alt_text %}
+                                                                <p class="product-description">{{ item.alt_text }}</p>
+                                                            {% endif %}
+
+                                                            {% if item.calories or item.allergens %}
+                                                                <div class="product-meta">
+                                                                    {% if item.calories %}
+                                                                        <span class="product-calories">{{ item.calories }} cal</span>
+                                                                    {% endif %}
+
+                                                                    {% if item.allergens %}
+                                                                        <span class="product-allergens">الحساسية: {{ item.allergens }}</span>
+                                                                    {% endif %}
+                                                                </div>
+                                                            {% endif %}
+
+                                                            {% if item.price %}
+                                                                <p class="product-price">{{ item.price|floatformat:"-2" }} SR</p>
+                                                            {% endif %}
+                                                        </article>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </div>
+                                        </div>
+
+                                        <div class="drip-harvest-group">
+                                            <p class="category-note drip-slide-note">محصول إثيوبي</p>
+
+                                            <div class="drip-products-grid">
+                                                {% for item in menu_images %}
+                                                    {% if item.display_order > 6 and item.display_order <= 8 %}
+                                                        <article class="product-card drip-product-card">
+                                                            <div class="product-image">
+                                                                <img src="{{ item.image.url }}" alt="{% if item.alt_text %}{{ item.alt_text }}{% elif item.title %}{{ item.title }}{% else %}{{ item.title_en }}{% endif %}">
+                                                            </div>
+
+                                                            {% if item.title or item.title_en %}
+                                                                <h2 class="product-name">
+                                                                    {% if item.title %}
+                                                                        {% if item.title_en %}
+                                                                            <span class="product-name-ar">{{ item.title }}</span>
+                                                                        {% else %}
+                                                                            {% for title_line in item.title.splitlines %}
+                                                                                <span class="{% if forloop.first %}product-name-ar{% else %}product-name-en{% endif %}">{{ title_line }}</span>
+                                                                            {% endfor %}
+                                                                        {% endif %}
+                                                                    {% endif %}
+
+                                                                    {% if item.title_en %}
+                                                                        <span class="product-name-en">{{ item.title_en }}</span>
+                                                                    {% endif %}
+                                                                </h2>
+                                                            {% endif %}
+
+                                                            {% if item.description %}
+<p class="product-description" style="white-space: pre-line !important; font-size: 12px !important; line-height: 1.5 !important;">
+    {{ item.description }}
+</p>                                                            {% elif item.alt_text %}
+                                                                <p class="product-description">{{ item.alt_text }}</p>
+                                                            {% endif %}
+
+                                                            {% if item.calories or item.allergens %}
+                                                                <div class="product-meta">
+                                                                    {% if item.calories %}
+                                                                        <span class="product-calories">{{ item.calories }} cal</span>
+                                                                    {% endif %}
+
+                                                                    {% if item.allergens %}
+                                                                        <span class="product-allergens">الحساسية: {{ item.allergens }}</span>
+                                                                    {% endif %}
+                                                                </div>
+                                                            {% endif %}
+
+                                                            {% if item.price %}
+                                                                <p class="product-price">{{ item.price|floatformat:"-2" }} SR</p>
+                                                            {% endif %}
+                                                        </article>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </section>
+
+                            </div>
+
+                            <button class="carousel-arrow next" type="button" data-carousel-next aria-label="التالي">›</button>
+                            <div class="carousel-dots" data-carousel-dots aria-hidden="true"></div>
+                        </div>
+
+                    {% else %}
+
+                        <div class="products-carousel" data-products-carousel>
+                            <button class="carousel-arrow prev" type="button" data-carousel-prev aria-label="السابق">‹</button>
+
+                            <div class="products-track" data-carousel-track>
+                                {% for item in menu_images %}
+                                    <article class="product-card">
+                                        <div class="product-image">
+                                            <img src="{{ item.image.url }}" alt="{% if item.alt_text %}{{ item.alt_text }}{% elif item.title %}{{ item.title }}{% else %}{{ item.title_en }}{% endif %}">
+                                        </div>
+
+                                        {% if item.title or item.title_en %}
+                                            <h2 class="product-name">
+                                                {% if item.title %}
+                                                    {% if item.title_en %}
+                                                        <span class="product-name-ar">{{ item.title }}</span>
+                                                    {% else %}
+                                                        {% for title_line in item.title.splitlines %}
+                                                            <span class="{% if forloop.first %}product-name-ar{% else %}product-name-en{% endif %}">{{ title_line }}</span>
+                                                        {% endfor %}
+                                                    {% endif %}
+                                                {% endif %}
+
+                                                {% if item.title_en %}
+                                                    <span class="product-name-en">{{ item.title_en }}</span>
+                                                {% endif %}
+                                            </h2>
+                                        {% endif %}
+
+                                        {% if item.description %}
+<p class="product-description" style="white-space: pre-line !important; font-size: 12px !important; line-height: 1.5 !important;">
+    {{ item.description }}
+</p>                                        {% elif item.alt_text %}
+                                            <p class="product-description">{{ item.alt_text }}</p>
+                                        {% endif %}
+
+                                        {% if item.calories or item.allergens %}
+                                            <div class="product-meta">
+                                                {% if item.calories %}
+                                                    <span class="product-calories">{{ item.calories }} cal</span>
+                                                {% endif %}
+
+                                                {% if item.allergens %}
+                                                    <span class="product-allergens">الحساسية: {{ item.allergens }}</span>
+                                                {% endif %}
+                                            </div>
+                                        {% endif %}
+
+                                        {% if item.price %}
+                                            <p class="product-price">{{ item.price|floatformat:"-2" }} SR</p>
+                                        {% endif %}
+                                    </article>
+                                {% endfor %}
+                            </div>
+
+                            <button class="carousel-arrow next" type="button" data-carousel-next aria-label="التالي">›</button>
+                            <div class="carousel-dots" data-carousel-dots aria-hidden="true"></div>
+                        </div>
+
+                    {% endif %}
+                {% else %}
+                    <div class="empty-state">لم تتم إضافة منتجات لهذا القسم حتى الآن</div>
+                {% endif %}
+            </section>
+        </section>
+    </main>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const currentPath = window.location.pathname.replace(/\/$/, "");
+            const list = document.querySelectorAll(".list");
+
+            for (let i = 0; i < list.length; i++) {
+                const link = list[i].querySelector(".category-link");
+                const linkPath = link ? new URL(link.href).pathname.replace(/\/$/, "") : "";
+
+                list[i].classList.remove("active", "is-active");
+
+                if (linkPath === currentPath) {
+                    list[i].classList.add("active", "is-active");
+                }
+
+                list[i].onclick = function () {
+                    let j = 0;
+
+                    while (j < list.length) {
+                        list[j++].classList.remove("active", "is-active");
+                    }
+
+                    list[i].classList.add("active", "is-active");
+                };
+            }
+        });
+
+        document.querySelectorAll("[data-products-carousel]").forEach((carousel) => {
+            const track = carousel.querySelector("[data-carousel-track]");
+            const dotsWrap = carousel.querySelector("[data-carousel-dots]");
+            const prev = carousel.querySelector("[data-carousel-prev]");
+            const next = carousel.querySelector("[data-carousel-next]");
+
+            if (!track || !dotsWrap) return;
+
+            const getPageCount = () => Math.max(1, Math.ceil(track.scrollWidth / track.clientWidth));
+
+            const updateDots = () => {
+                const pageCount = getPageCount();
+                const currentPage = Math.min(
+                    pageCount - 1,
+                    Math.round(track.scrollLeft / Math.max(1, track.clientWidth))
+                );
+
+                dotsWrap.innerHTML = "";
+
+                for (let index = 0; index < pageCount; index += 1) {
+                    const dot = document.createElement("span");
+                    dot.className = `carousel-dot${index === currentPage ? " is-active" : ""}`;
+                    dotsWrap.appendChild(dot);
+                }
+            };
+
+            const move = (direction) => {
+                track.scrollBy({
+                    left: direction * track.clientWidth,
+                    behavior: "smooth",
+                });
+            };
+
+            prev?.addEventListener("click", () => move(-1));
+            next?.addEventListener("click", () => move(1));
+            track.addEventListener("scroll", () => window.requestAnimationFrame(updateDots));
+            window.addEventListener("resize", updateDots);
+
+            updateDots();
+        });
+    </script>
+
+</body>
+</html>
