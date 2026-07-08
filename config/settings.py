@@ -32,7 +32,19 @@ SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", "django-insecure-change-this-key")
 
 DEBUG = env_bool("DJANGO_DEBUG", True)
 
-ALLOWED_HOSTS = env_list("DJANGO_ALLOWED_HOSTS", ["127.0.0.1", "localhost"])
+import os
+
+ALLOWED_HOSTS = [
+    "127.0.0.1",
+    "localhost",
+    "ipadro.onrender.com",
+]
+
+RENDER_EXTERNAL_HOSTNAME = os.environ.get("RENDER_EXTERNAL_HOSTNAME")
+if RENDER_EXTERNAL_HOSTNAME:
+    ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
+
+    "https://ipadro.onrender.com",
 
 
 INSTALLED_APPS = [
