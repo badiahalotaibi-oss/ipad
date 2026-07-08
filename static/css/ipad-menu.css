@@ -1,26 +1,16 @@
 @font-face {
-    font-family: "ManchetteFine";
-    src: url("../fonts/ManchetteFine-Regular.otf") format("opentype");
-    font-weight: 400;
-    font-style: normal;
-    font-display: swap;
+  font-family: "Camel";
+  src: url("../fonts/TheYearofTheCamel-Regular.otf") format("opentype");
+  font-display: swap;
 }
 
 @font-face {
-    font-family: "ManchetteFine";
-    src: url("../fonts/ManchetteFine-Bold.otf") format("opentype");
-    font-weight: 700;
-    font-style: normal;
-    font-display: swap;
+  font-family: "Manchette";
+  src: url("../fonts/ManchetteFine-Regular.otf") format("opentype");
+  font-weight: 400;
+  font-display: swap;
 }
 
-@font-face {
-    font-family: "CamelYear";
-    src: url("../fonts/TheYearofTheCamel-Regular.otf") format("opentype");
-    font-weight: 400;
-    font-style: normal;
-    font-display: swap;
-}
 @font-face {
   font-family: "Manchette";
   src: url("../fonts/ManchetteFine-Bold.otf") format("opentype");
@@ -1423,72 +1413,4 @@ body.menu-screen-page:not(.menu-home-page)::after {
     margin: 0 auto !important;
     transform: none !important;
   }
-}
-/* Fix Arabic product fonts */
-.product-name-ar,
-.product-description,
-.product-meta,
-.product-calories,
-.product-allergens,
-.current-category span,
-.category-note,
-.sidebar-link {
-    font-family: Tahoma, Arial, "Segoe UI", sans-serif !important;
-    font-weight: 400 !important;
-    letter-spacing: 0 !important;
-    direction: rtl !important;
-    unicode-bidi: isolate !important;
-}
-
-.product-name-en,
-.current-category small {
-    font-family: Georgia, "Times New Roman", serif !important;
-    letter-spacing: 0 !important;
-}
-.product-name,
-.product-name-ar,
-.product-description,
-.product-meta,
-.product-calories,
-.product-allergens,
-.current-category span,
-.category-note,
-.sidebar-link,
-.home-slogan,
-.home-browse-btn {
-    font-family: "RouhArabic", Tahoma, Arial, sans-serif !important;
-    letter-spacing: 0 !important;
-    direction: rtl !important;
-    unicode-bidi: isolate !important;
-}
-
-.product-name-en,
-.current-category small {
-    font-family: Georgia, "Times New Roman", serif !important;
-    direction: ltr !important;
-}
-body,
-.menu-screen-page,
-.sidebar-link,
-.current-category span,
-.category-note,
-.product-name,
-.product-name-ar,
-.product-description,
-.product-meta,
-.product-calories,
-.product-allergens,
-.home-slogan,
-.home-browse-btn {
-    font-family: "ManchetteFine", Tahoma, Arial, sans-serif !important;
-    letter-spacing: 0 !important;
-    direction: rtl !important;
-    unicode-bidi: isolate !important;
-}
-
-.product-name-en,
-.current-category small {
-    font-family: Georgia, "Times New Roman", serif !important;
-    direction: ltr !important;
-    unicode-bidi: isolate !important;
 }
