@@ -1435,3 +1435,25 @@ body.menu-screen-page:not(.menu-home-page)::after {
     font-family: Georgia, "Times New Roman", serif !important;
     letter-spacing: 0 !important;
 }
+.product-name,
+.product-name-ar,
+.product-description,
+.product-meta,
+.product-calories,
+.product-allergens,
+.current-category span,
+.category-note,
+.sidebar-link,
+.home-slogan,
+.home-browse-btn {
+    font-family: "RouhArabic", Tahoma, Arial, sans-serif !important;
+    letter-spacing: 0 !important;
+    direction: rtl !important;
+    unicode-bidi: isolate !important;
+}
+
+.product-name-en,
+.current-category small {
+    font-family: Georgia, "Times New Roman", serif !important;
+    direction: ltr !important;
+}
