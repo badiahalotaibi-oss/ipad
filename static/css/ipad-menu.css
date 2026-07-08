@@ -1414,3 +1414,24 @@ body.menu-screen-page:not(.menu-home-page)::after {
     transform: none !important;
   }
 }
+/* Fix Arabic product fonts */
+.product-name-ar,
+.product-description,
+.product-meta,
+.product-calories,
+.product-allergens,
+.current-category span,
+.category-note,
+.sidebar-link {
+    font-family: Tahoma, Arial, "Segoe UI", sans-serif !important;
+    font-weight: 400 !important;
+    letter-spacing: 0 !important;
+    direction: rtl !important;
+    unicode-bidi: isolate !important;
+}
+
+.product-name-en,
+.current-category small {
+    font-family: Georgia, "Times New Roman", serif !important;
+    letter-spacing: 0 !important;
+}
